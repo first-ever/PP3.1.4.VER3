@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,43 +15,46 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
 
+    private final PasswordEncoder passwordEncoder;
+    private final UserDao userDao;
+
     @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
-    UserRepository userRepository;
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserDao userDao) {
+        this.passwordEncoder = passwordEncoder;
+        this.userDao = userDao;
+    }
 
     @Override
     public void addUser(User user) {
-        userRepository.addUser(user);
+        userDao.addUser(user);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.getAllUsers();
+        return userDao.getAllUsers();
     }
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteUser(id);
+        userDao.deleteUser(id);
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getUserById(id);
+        return userDao.getUserById(id);
     }
 
     @Override
     public void editUser(User user) {
-        userRepository.editUser(user);
+        userDao.editUser(user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.getUserByUsername(username);
+        User user = userDao.getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User not found"));
         }
         return user;
     }
-
 }

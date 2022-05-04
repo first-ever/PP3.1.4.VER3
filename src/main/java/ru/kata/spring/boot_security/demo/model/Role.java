@@ -8,10 +8,6 @@ import java.util.Set;
 @Table (name = "roles")
 public class Role implements GrantedAuthority {
 
-    @Override
-    public String getAuthority() {
-       return getName();
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,6 +47,11 @@ public class Role implements GrantedAuthority {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getAuthority() {
+        return getName();
     }
 
     @Override

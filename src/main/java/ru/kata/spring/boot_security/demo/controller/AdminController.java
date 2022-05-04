@@ -16,10 +16,14 @@ import java.util.Set;
 @Controller
 public class AdminController {
 
+    private final RoleService roleService;
+    private final UserService userService;
+
     @Autowired
-    RoleService roleService;
-    @Autowired
-    UserService userService;
+    public AdminController(RoleService roleService, UserService userService) {
+        this.roleService = roleService;
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/admin")
     public String adminPage(Model model){
@@ -64,10 +68,10 @@ public class AdminController {
 
     @PostMapping(value = "admin/edit/{id}")
     public String postEditUser(@ModelAttribute("user") User user,
-                               @RequestParam(required=false) String role) {
+                               @RequestParam(name = "role", required=false) String role) {
 
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleByName(role));
+        roles.add(roleService.getDefaultRole());
         if (role != null && role.equals("ROLE_ADMIN")) {
             roles.add(roleService.getRoleByName(role));
         }
