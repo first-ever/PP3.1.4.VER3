@@ -31,7 +31,7 @@ public class AdminController {
         model.addAttribute("user", (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "adminPage";
     }
-
+/*
     //@GetMapping(value = "/admin/add")
     //public String addUser(Model model) {
       //  model.addAttribute("user", new User());
@@ -85,6 +85,6 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
-
+*/
 
 }

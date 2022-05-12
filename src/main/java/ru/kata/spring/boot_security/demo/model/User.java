@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +14,10 @@ import java.util.Set;
 @Entity
 @Table(name= "users")
 public class User implements Serializable, UserDetails {
+
+    @Version
+    @JsonIgnore
+    private Long version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +38,6 @@ public class User implements Serializable, UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "age")
-    private int age;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -47,22 +49,13 @@ public class User implements Serializable, UserDetails {
     }
 
     public User(String username, String password, String firstName, String lastName,
-                String email, Set<Role> roles, int age) {
+                String email, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.roles = roles;
-        this.age = age;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getFirstName() {
@@ -123,26 +116,31 @@ public class User implements Serializable, UserDetails {
         this.roles = roles;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
@@ -155,12 +153,12 @@ public class User implements Serializable, UserDetails {
         User user = (User) o;
         return id.equals(user.id) && username.equals(user.username) && firstName.equals(user.firstName)
                 && password.equals(user.password) && lastName.equals(user.lastName)
-                && email.equals(user.email) && age == age &&
+                && email.equals(user.email) &&
                 roles.equals(user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, roles, lastName, firstName, email, age);
+        return Objects.hash(id, username, password, roles, lastName, firstName, email);
     }
 }
