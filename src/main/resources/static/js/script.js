@@ -16,8 +16,8 @@ function insertUser() {
         'password': userAddFormId.find('#password').val(),
         'roles': userAddFormId.find('#rroles')
             .val()
-            .map(function(val, index){
-                return {id:index+1, name:val};
+            .map(function(val, index) {
+                return {id:val, name:'собака'};
             })
     }
 
@@ -222,12 +222,18 @@ function sleep(milliseconds) {
 
 $('#addButton').click(() => {
     insertUser();
+        userAddFormId.find('#firstName').val('');
+        userAddFormId.find('#lastName').val('');
+        userAddFormId.find('#username').val('');
+        userAddFormId.find('#email').val('');
+        userAddFormId.find('#password').val('');
 });
 
 $('#newUserLink').click(() => {
     userAddFormId.find('#password').removeClass('alert alert-danger');
     userAddFormId.find('#password').removeAttr('placeholder');
 
+    console.log('собака');
     fetch('/api/roles').then(function (response) {
         if (response.ok) {
             userAddFormId.find('#rroles').empty();
