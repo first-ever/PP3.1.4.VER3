@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User not found" + username));
         }
+
         return user;
     }
 }
