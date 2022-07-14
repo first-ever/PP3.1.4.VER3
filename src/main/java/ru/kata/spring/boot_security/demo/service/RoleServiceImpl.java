@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService{

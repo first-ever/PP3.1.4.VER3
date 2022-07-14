@@ -12,17 +12,10 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
 public class UserController {
-    private UserService userService;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("/user")
     public String findAll(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        model.addAttribute("user", (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "user";
     }
 

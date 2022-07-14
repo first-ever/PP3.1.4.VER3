@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,14 +14,10 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name= "users")
+@Table(name= "users6")
 public class User implements Serializable, UserDetails {
-
-    //@Version
-    //@JsonIgnore
-    //private Long version;
-
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -38,8 +36,9 @@ public class User implements Serializable, UserDetails {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinTable(name = "users_roles",
+    @ManyToMany
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(name = "users_roles6",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();

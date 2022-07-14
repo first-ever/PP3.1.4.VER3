@@ -15,6 +15,7 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
+
     @Autowired
     public UserService userService;
 
@@ -39,6 +40,7 @@ public class RestController {
 
     @GetMapping(value = "/api/all")
     public ResponseEntity<List<User>> getAll() {
+
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
@@ -53,4 +55,5 @@ public class RestController {
         userService.editUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

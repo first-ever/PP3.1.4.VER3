@@ -17,7 +17,7 @@ function insertUser() {
         'roles': userAddFormId.find('#rroles')
             .val()
             .map(function(val, index) {
-                return {id:val, name:'собака'};
+                return {id:val};
             })
     }
 
@@ -185,6 +185,7 @@ function editUser(id) {
         method: 'PUT',
         headers: headers,
         body: JSON.stringify(user)
+
     });
 
     fetch(request)
@@ -201,6 +202,7 @@ function editUser(id) {
     getAllUsers();
 
 }
+
 
 
 function Readonly(value = true) {

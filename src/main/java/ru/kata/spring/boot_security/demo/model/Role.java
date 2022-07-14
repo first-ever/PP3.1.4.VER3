@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table (name = "roles")
+@Table (name = "roles6")
 public class Role implements GrantedAuthority {
 
     @Id
@@ -51,7 +51,6 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    @JsonIgnore
     @Override
     public String getAuthority() {
         return getName();
@@ -59,7 +58,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return this.name.substring(5,this.name.length());
+        return this.name.substring(5);
     }
 
 
